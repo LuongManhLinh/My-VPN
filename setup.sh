@@ -54,7 +54,8 @@ wg genkey | tee ${CLIENT_NAME}_private.key | wg pubkey > ${CLIENT_NAME}_public.k
 CLIENT_PRIVATE_KEY=$(cat ${CLIENT_NAME}_private.key)
 CLIENT_IP="10.0.0.2/32"  # First client IP
 SERVER_PUBLIC_KEY=$(cat /etc/wireguard/server_public.key)
-SERVER_ENDPOINT="YOUR_SERVER_PUBLIC_IP:${LISTEN_PORT}"  # Replace with your actual server IP
+SERVER_PUBLIC_IP=$(curl -s ifconfig.me)
+SERVER_ENDPOINT="${SERVER_PUBLIC_IP}:${LISTEN_PORT}" 
 
 cat > ${CLIENT_NAME}.conf << EOF
 [Interface]
