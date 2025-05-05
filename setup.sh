@@ -45,36 +45,48 @@ systemctl enable wg-quick@wg0
 systemctl start wg-quick@wg0
 
 # Step 6: Generate client keys and configuration
-echo "Generating client keys and configuration..."
-CLIENT_NAME="client1"
+echo "Generating client keys and configurations..."
 mkdir -p /etc/wireguard/clients
 cd /etc/wireguard/clients
-wg genkey | tee ${CLIENT_NAME}_private.key | wg pubkey > ${CLIENT_NAME}_public.key
 
-CLIENT_PRIVATE_KEY=$(cat ${CLIENT_NAME}_private.key)
-CLIENT_IP="10.0.0.2/32"  # First client IP
 SERVER_PUBLIC_KEY=$(cat /etc/wireguard/server_public.key)
 SERVER_PUBLIC_IP=$(curl -s ifconfig.me)
 echo "Server public IP: ${SERVER_PUBLIC_IP}"
 SERVER_ENDPOINT="${SERVER_PUBLIC_IP}:${LISTEN_PORT}" 
 
-cat > ${CLIENT_NAME}.conf << EOF
+# Generate configs for 3 clients
+for i in 1 2 3; do
+  CLIENT_NAME="client${i}"
+  CLIENT_IP="10.0.0.$((i + 1))/32"  # client1: 10.0.0.2, client2: 10.0.0.3, etc.
+
+  echo "Creating keys and config for ${CLIENT_NAME} with IP ${CLIENT_IP}..."
+
+  wg genkey | tee ${CLIENT_NAME}_private.key | wg pubkey > ${CLIENT_NAME}_public.key
+
+  CLIENT_PRIVATE_KEY=$(cat ${CLIENT_NAME}_private.key)
+  CLIENT_PUBLIC_KEY=$(cat ${CLIENT_NAME}_public.key)
+
+  cat > ${CLIENT_NAME}.conf << EOF
 [Interface]
 PrivateKey = ${CLIENT_PRIVATE_KEY}
 Address = ${CLIENT_IP}
-DNS = 1.1.1.1, 8.8.8.8  # Using Cloudflare and Google DNS
+DNS = 1.1.1.1, 8.8.8.8, 9.9.9.9  # Using Cloudflare, Google, and Quad9 DNS
 
 [Peer]
 PublicKey = ${SERVER_PUBLIC_KEY}
 Endpoint = ${SERVER_ENDPOINT}
-AllowedIPs = 0.0.0.0/0  # Route all traffic through VPN
-PersistentKeepalive = 25  # Important for NAT traversal
+AllowedIPs = 0.0.0.0/0
+PersistentKeepalive = 25
 EOF
 
-# Add client to server configuration
-wg set wg0 peer $(cat ${CLIENT_NAME}_public.key) allowed-ips ${CLIENT_IP}
+  # Add client to server config
+  wg set wg0 peer ${CLIENT_PUBLIC_KEY} allowed-ips ${CLIENT_IP}
+done
+
+# Save updated server config
 wg-quick save wg0
 
+echo "Done generating clients. Config files are in /etc/wireguard/clients/"
 echo "WireGuard server setup complete!"
 echo "Client configuration saved at /etc/wireguard/clients/${CLIENT_NAME}.conf"
 echo "You can generate a QR code for mobile clients with:"
