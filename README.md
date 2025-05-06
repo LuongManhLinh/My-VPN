@@ -1,0 +1,63 @@
+# My-VPN
+
+This project provides a simple Flask-based server to manage and retrieve VPN client configuration files.
+
+## Prerequisites
+
+- Ubuntu/Debian-based system
+- Python 3.x installed
+- `pip` for Python package management
+
+## Setup Instructions
+
+1. Clone the repository:
+    ```bash
+    git clone <repository-url>
+    cd My-VPN
+    ```
+
+2. Run the setup script to install dependencies:
+    ```bash
+    ./setup.sh
+    ```
+
+3. Install Python dependencies:
+    ```bash
+    pip install flask
+    ```
+
+4. Set the environment variable `SECRET_KEY`:
+    ```bash
+    export SECRET_KEY=<your-secret-key>
+    ```
+
+5. Start the server:
+    ```bash
+    python3 server.py
+    ```
+
+## Usage
+
+1. Ensure the server is running on `http://0.0.0.0:5000`.
+
+2. To download a VPN client configuration file, make a GET request to the `/file` endpoint with the following query parameters:
+    - `key`: The secret key set in the `SECRET_KEY` environment variable.
+    - `idx`: The index of the client configuration file (e.g., `1` for `client1.conf`).
+
+    Example:
+    ```bash
+    curl -O "http://<server-ip>:5000/file?key=<your-secret-key>&idx=1"
+    ```
+
+3. The server will return the requested configuration file if the key is valid and the file exists. Otherwise:
+    - A `403 Forbidden` error is returned for an invalid key.
+    - A `404 Not Found` error is returned if the file does not exist.
+
+## Notes
+
+- Ensure the VPN client configuration files are stored in `/etc/wireguard/clients/` with the naming convention `client<idx>.conf`.
+- Run the server in a secure environment and restrict access to authorized users only.
+
+## License
+
+This project is licensed under the MIT License.  
