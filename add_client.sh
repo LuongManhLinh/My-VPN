@@ -22,7 +22,7 @@ LISTEN_PORT=80
 SERVER_ENDPOINT="${SERVER_PUBLIC_IP}:${LISTEN_PORT}" 
 
 echo "Creating keys and config for ${CLIENT_NAME} with IP ${CLIENT_IP}..."
-
+cd /etc/wireguard/clients
 wg genkey | tee ${CLIENT_NAME}_private.key | wg pubkey > ${CLIENT_NAME}_public.key
 
 CLIENT_PRIVATE_KEY=$(cat ${CLIENT_NAME}_private.key)
