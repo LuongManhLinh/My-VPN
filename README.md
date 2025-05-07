@@ -53,6 +53,11 @@ This project provides a simple Flask-based server to manage and retrieve VPN cli
     - A `403 Forbidden` error is returned for an invalid key.
     - A `404 Not Found` error is returned if the file does not exist.
 
+4. To add new client, run this command with `sudo`:
+    ```bash
+    ./add_client --client-name <name>
+    ```
+
 ## Notes
 
 - Ensure the VPN client configuration files are stored in `/etc/wireguard/clients/` with the naming convention `client<idx>.conf`.
