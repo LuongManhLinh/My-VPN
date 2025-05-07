@@ -57,7 +57,7 @@ SERVER_ENDPOINT="${SERVER_PUBLIC_IP}:${LISTEN_PORT}"
 # Generate configs for 3 clients
 for i in 1 2 3; do
   CLIENT_NAME="client${i}"
-  CLIENT_IP="10.0.0.$((i + 1))/32"  # client1: 10.0.0.2, client2: 10.0.0.3, etc.
+  CLIENT_IP="10.0.0.$((i + 1))/32" 
 
   echo "Creating keys and config for ${CLIENT_NAME} with IP ${CLIENT_IP}..."
 
@@ -90,5 +90,4 @@ echo "Done generating clients. Config files are in /etc/wireguard/clients/"
 echo "WireGuard server setup complete!"
 echo "Client configuration saved at /etc/wireguard/clients/${CLIENT_NAME}.conf"
 echo "You can generate a QR code for mobile clients with:"
-echo "sudo cat /etc/wireguard/clients/client1.conf | qrencode -t ansiutf8
-"
+echo "sudo cat /etc/wireguard/clients/client1.conf | qrencode -t ansiutf8"
