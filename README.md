@@ -29,7 +29,7 @@ This project provides a simple Flask-based server to manage and retrieve VPN cli
 
 4. Start the server with `SECRET_KEY`:
     ```bash
-    python3 SECRET_KEY=<your_key> server.py
+    SECRET_KEY=<your_key> python3 server.py
     ```
 
 ## Usage
@@ -42,7 +42,7 @@ This project provides a simple Flask-based server to manage and retrieve VPN cli
 
     Example:
     ```bash
-    curl -O "http://<server-ip>:5000/file?key=<your-secret-key>&idx=1"
+    curl -O "http://<server-ip>:5000/file?key=<your-secret-key>&conf-name=<name-of-conf-file>"
     ```
 
 3. The server will return the requested configuration file if the key is valid and the file exists. Otherwise:
