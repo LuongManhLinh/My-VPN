@@ -26,14 +26,10 @@ This project provides a simple Flask-based server to manage and retrieve VPN cli
     pip install flask
     ```
 
-4. Set the environment variable `SECRET_KEY`:
-    ```bash
-    export SECRET_KEY=<your-secret-key>
-    ```
 
-5. Start the server:
+4. Start the server with `SECRET_KEY`:
     ```bash
-    python3 server.py
+    python3 SECRET_KEY=<your_key> server.py
     ```
 
 ## Usage
