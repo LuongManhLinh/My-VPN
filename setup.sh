@@ -7,7 +7,8 @@ set -e
 echo "Updating system and installing WireGuard..."
 apt update && apt upgrade -y
 apt install -y wireguard wireguard-tools qrencode
-apt install -y python3-flask
+apt install -y python3-pip
+apt install -y python3-flask 
 
 # Step 2: Enable IP forwarding
 echo "Enabling IP forwarding..."
