@@ -3,7 +3,6 @@ FROM ubuntu:22.04
 # Set environment variables to non-interactive for apt
 ENV DEBIAN_FRONTEND=noninteractive
 
-
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     git \
@@ -19,7 +18,7 @@ RUN apt-get update && apt-get install -y \
 # Copy local files into the container
 COPY setup.sh /app/setup.sh
 COPY server.py /app/server.py
-COPY .env /app/.env
+
 
 # Set working directory
 WORKDIR /app
@@ -28,10 +27,10 @@ WORKDIR /app
 RUN chmod +x setup.sh
 
 # Run setup.sh during build-time (optional)
-# RUN ./setup.sh
+RUN ./setup.sh
 
 # Expose the ports used by VPN and web server
 EXPOSE 80 5000
 
-# Start both VPN setup and web server
-CMD ["/bin/bash", "-c", "./setup.sh && python3 server.py"]
+# Start the server when the container launches
+CMD ["python3", "server.py"]

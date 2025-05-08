@@ -1,10 +1,6 @@
 services:
   vpn_server:
     build: .
-    env_file:
-      - .env
-    volumes:
-      - .:/app
     container_name: vpn_service
     ports:
       - "80:80"
