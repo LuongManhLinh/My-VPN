@@ -8,8 +8,7 @@ def download_file():
     key = request.args.get('key')
     name = request.args.get('name')
     if key == os.getenv("SECRET_KEY"): 
-        file_path = f"/etc/wireguard/clients/{name}.conf"
-        print(f"Attempting to send file: {file_path}")  
+        file_path = f"/etc/wireguard/clients/client{name}.conf"
         try:
             return send_file(file_path, as_attachment=True)
         except FileNotFoundError:
