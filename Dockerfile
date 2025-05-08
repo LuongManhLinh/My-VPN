@@ -1,11 +1,12 @@
-# Use a lightweight Debian/Ubuntu base image
 FROM ubuntu:22.04
 
 # Set environment variables to non-interactive for apt
 ENV DEBIAN_FRONTEND=noninteractive
 
+
 # Install dependencies
 RUN apt-get update && apt-get install -y \
+    git \
     python3 \
     python3-pip \
     iproute2 \
@@ -18,6 +19,7 @@ RUN apt-get update && apt-get install -y \
 # Copy local files into the container
 COPY setup.sh /app/setup.sh
 COPY server.py /app/server.py
+COPY .env /app/.env
 
 # Set working directory
 WORKDIR /app
