@@ -3,12 +3,13 @@ import os
 
 app = Flask(__name__)
 
-@app.route("/file")
+@app.route("/conf")
 def download_file():
     key = request.args.get('key')
-    conf_name = request.args.get('conf-name')
+    name = request.args.get('name')
     if key == os.getenv("SECRET_KEY"): 
-        file_path = f"/etc/wireguard/clients/{conf_name}.conf"  
+        file_path = f"/etc/wireguard/clients/{name}.conf"
+        print(f"Attempting to send file: {file_path}")  
         try:
             return send_file(file_path, as_attachment=True)
         except FileNotFoundError:
