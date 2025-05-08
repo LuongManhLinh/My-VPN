@@ -62,7 +62,10 @@ This project provides a simple Flask-based server to manage and retrieve VPN cli
 
 - Ensure the VPN client configuration files are stored in `/etc/wireguard/clients/` with the naming convention `client<idx>.conf`.
 - Run the server in a secure environment and restrict access to authorized users only.
-
+- To create QR from a config file, run this command:
+```bash
+sudo cat /etc/wireguard/clients/<client_name>.conf | qrencode -t ansiutf8
+```
 ## License
 
 This project is licensed under the MIT License.  

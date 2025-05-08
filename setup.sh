@@ -54,8 +54,10 @@ SERVER_PUBLIC_IP=$(curl -s ifconfig.me)
 echo "Server public IP: ${SERVER_PUBLIC_IP}"
 SERVER_ENDPOINT="${SERVER_PUBLIC_IP}:${LISTEN_PORT}" 
 
-# Generate configs for 3 clients
-for i in 1 2 3; do
+echo "Server endpoint: ${SERVER_ENDPOINT}"
+
+echo "Creating client configuration files..."
+for i in 1 2 3 4 5; do
   CLIENT_NAME="client${i}"
   CLIENT_IP="10.0.0.$((i + 1))/32" 
 
