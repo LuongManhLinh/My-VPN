@@ -1,0 +1,10 @@
+services:
+  vpn_server:
+    build: .
+    container_name: vpn_service
+    ports:
+      - "80:80"
+      - "5000:5000"
+    cap_add:
+      - NET_ADMIN  # Required for networking commands in VPN setup
+    restart: unless-stopped
