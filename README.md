@@ -36,13 +36,13 @@ This project provides a simple Flask-based server to manage and retrieve VPN cli
 
 1. Ensure the server is running on `http://0.0.0.0:5000`.
 
-2. To download a VPN client configuration file, make a GET request to the `/file` endpoint with the following query parameters:
+2. To download a VPN client configuration file, make a GET request to the `/conf` endpoint with the following query parameters:
     - `key`: The secret key set in the `SECRET_KEY` environment variable.
     - `idx`: The index of the client configuration file (e.g., `1` for `client1.conf`).
 
     Example:
     ```bash
-    curl -O "http://<server-ip>:5000/file?key=<your-secret-key>&conf-name=<name-of-conf-file>"
+    curl -O "http://<server-ip>:5000/conf?key=<your-secret-key>&name=<idx-of-conf-file>"
     ```
 
 3. The server will return the requested configuration file if the key is valid and the file exists. Otherwise:
